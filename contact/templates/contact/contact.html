@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Me</title>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/scripts.js' %}"></script>
+</head>
+<body>
+    <h1>Contact</h1>
+    <form method="post">
+        {% csrf_token %}
+
+         {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <label for="submit" style="width: 10em; margin-right: 1em;">&nbsp;</label>
+
+            <button type="submit">Send</button>
+        </div>
+    </form>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => { closeAlerts(); });
+</script>
+</html>
